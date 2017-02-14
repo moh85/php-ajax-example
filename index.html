@@ -1,0 +1,57 @@
+<html>
+<head>
+    <title>PHP أجاكس و</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	 <style>body{text-align:center}#result{font-size:18px}#button{width:100%}#send{margin:0 auto; width:80%}</style>
+    <script type="text/javascript">
+        $(function() {
+
+            $('form#send').on('submit', function(e) { // id="send" :في حال تم الارسال من الفورم
+
+                e.preventDefault();
+
+                var fisrt = document.getElementById('first').value; // id مسك محتوى خانة الاسم من خلال الـ
+                var last = document.getElementById('last').value; // id مسك محتوى خانة الكنية من خلال الـ
+
+                if(fisrt.length >= 1 && last.length >= 1) { // التأكد أن خانة الاسم و الكنية تحتوي على بيانات و ليست فارغة
+                    $.ajax({
+
+                        type: 'POST', // نوع الطلب
+                        url: 'req.php', // ملف الطلب
+                        data: $('form#send').serialize(), // ارسال البيانات
+                        success: function(data) { // بعد الارسال
+
+                            document.getElementById("result").innerHTML = (data); // div result عرض النتيجة في
+
+                        }
+                    });
+                }
+					 else {
+                            document.getElementById("result").innerHTML = "الرجاء تعبئة كافة الخانات"; // في حال كانت الخانات فارغة
+					 }
+
+            });
+
+        });
+    </script>
+</head>
+<hr>
+<h4>مثال بسيط: PHP و Ajax</h4>
+<hr>
+
+<body dir="rtl">
+    <form id="send">
+        <input value="" class="form-control" placeholder="الاسم الأول" id="first" name="first">
+        <br>
+        <input value="" class="form-control" placeholder="الكنية" id="last" name="last">
+        <br>
+        <input id="button" type="submit" class="btn btn-primary" value="أرسل">
+    </form>
+    <hr>
+    <div id="result">النتيجة ستظهر هنا</div>
+</body>
+
+</html>
